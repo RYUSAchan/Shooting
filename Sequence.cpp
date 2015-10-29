@@ -191,9 +191,9 @@ void Sequence::Uninitialize()
 	RELEASE( pSprite );
 	RELEASE( pD3Ddevice );
 	RELEASE( pD3D );
+	ResetObjectBox();
 	Sound::ReleaseDirectSound();
 	CoUninitialize();
-	ResetObjectBox();
 }
 
 void Sequence::SetNextMode( Seq next )

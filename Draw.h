@@ -29,6 +29,15 @@ public:
 	void Draw( LPCTSTR text, int count,
 		LPRECT pRect, DWORD Format, D3DXCOLOR Color );
 
+	void Draw( LPCTSTR text, float x, float y, D3DXCOLOR Color );
+	void Draw( LPCTSTR text, float x, float y, float r, D3DXCOLOR Color );
+	void Draw( LPCTSTR text, float x, float y, float ex, float ey, D3DXCOLOR Color );
+	void Draw( LPCTSTR text, float x, float y, float ex, float ey, float r, D3DXCOLOR Color );
+
+	void Draw( LPCTSTR text, int count,
+		float x, float y, float ex, float ey, float r,
+		DWORD Format, D3DXCOLOR Color );
+
 	const LPD3DXFONT GetD3DXFont() { return font; }
 };
 

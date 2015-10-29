@@ -61,6 +61,59 @@ void DxFont::Draw( LPCTSTR text, int x, int y )
 		0xFFFFFFFF );
 }
 
+void DxFont::Draw( LPCTSTR text, int count,
+		float x, float y, float ex, float ey, float r,
+		DWORD Format, D3DXCOLOR Color )
+{
+	if( font ) {
+		RECT rc = { 0, 0, 0, 0 };
+		D3DXMATRIX mtrx1, mtrx2;
+
+		D3DXMatrixTranslation( &mtrx1, 0.0f, 0.0f, 0.0f );
+
+		if( ex != 1.0f || ey != 1.0f ) {
+			D3DXMatrixScaling( &mtrx2, ex, ey, 1.0f );
+			D3DXMatrixMultiply( &mtrx1, &mtrx1, &mtrx2 );
+		}
+
+		if( r != 0.0f ) {
+			D3DXMatrixRotationZ( &mtrx2, r );
+			D3DXMatrixMultiply( &mtrx1, &mtrx1, &mtrx2 );
+		}
+
+		D3DXMatrixTranslation( &mtrx2, x, y, 0.0f );
+		D3DXMatrixMultiply( &mtrx1, &mtrx1, &mtrx2 );
+
+		pSprite->Begin( NULL );
+
+		pSprite->SetTransform( &mtrx1 );
+
+		font->DrawText( pSprite, text, count, &rc, Format, Color );
+
+		pSprite->End();
+	}
+}
+
+void DxFont::Draw( LPCTSTR text, float x, float y, D3DXCOLOR Color )
+{
+	Draw( text, -1, x, y, 1.0f, 1.0f, 0.0f, DT_NOCLIP | DT_CENTER, Color );
+}
+
+void DxFont::Draw( LPCTSTR text, float x, float y, float r, D3DXCOLOR Color )
+{
+	Draw( text, -1, x, y, 1.0f, 1.0f, r, DT_NOCLIP | DT_CENTER, Color );
+}
+
+void DxFont::Draw( LPCTSTR text, float x, float y, float ex, float ey, D3DXCOLOR Color )
+{
+	Draw( text, -1, x, y, ex, ey, 0.0f, DT_NOCLIP | DT_CENTER, Color );
+}
+
+void DxFont::Draw( LPCTSTR text, float x, float y, float ex, float ey, float r, D3DXCOLOR Color )
+{
+	Draw( text, -1, x, y, ex, ey, r, DT_NOCLIP | DT_CENTER, Color );
+}
+
 Texture::Texture()
 	:	texture( NULL )
 {}
